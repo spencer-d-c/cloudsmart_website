@@ -39,28 +39,21 @@ const slides = [
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    // Set loaded state after component mounts
+    setIsLoaded(true)
+    
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-      setIsAnimating(true)
     }, 8000)
 
     return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    const animationTimer = setTimeout(() => {
-      setIsAnimating(false)
-    }, 500)
-
-    return () => clearTimeout(animationTimer)
-  }, [currentSlide])
-
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
-    setIsAnimating(true)
   }
 
   const currentSlideData = slides[currentSlide]
@@ -70,32 +63,34 @@ export default function HeroSlider() {
       <div 
         className="hero-slide"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${currentSlideData.backgroundImage})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.3)), url(${currentSlideData.backgroundImage})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
         }}
       >
         <div className="hero-content">
           <div className="hero-text">
-            <div className={`hero-line ${isAnimating ? 'animate-in' : ''}`}>
-              <span className="text-word-1">{currentSlideData.text1}</span>
-              <span className="text-word-2">{currentSlideData.text2}</span>
+            <div className="hero-text-line-1">
+              <span className="hero-word hero-word-light">{currentSlideData.text1}</span>
+              <span className="hero-word hero-word-bold">{currentSlideData.text2}</span>
             </div>
-            <div className={`hero-line ${isAnimating ? 'animate-in delay-1' : ''}`}>
-              <span className="text-word-3">{currentSlideData.text3}</span>
-              <span className="text-word-4">{currentSlideData.text4}</span>
+            <div className="hero-text-line-2">
+              <span className="hero-word hero-word-light">{currentSlideData.text3}</span>
+              <span className="hero-word hero-word-bold">{currentSlideData.text4}</span>
             </div>
             {currentSlideData.tagline && (
-              <div className={`hero-tagline ${isAnimating ? 'animate-in delay-2' : ''}`}>
+              <div className="hero-tagline">
                 {currentSlideData.tagline}
               </div>
             )}
           </div>
           
-          <div className={`hero-button-container ${isAnimating ? 'animate-in delay-3' : ''}`}>
+          <div className="hero-button-container">
             <Link href={currentSlideData.buttonLink} className="hero-btn">
               {currentSlideData.button}
+              <span className="btn-arrow">→</span>
             </Link>
           </div>
         </div>
