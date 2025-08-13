@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     )
 
     return NextResponse.json({ blogPost: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating blog post:', error)
     
     if (error.code === '23505') { // Unique constraint violation
