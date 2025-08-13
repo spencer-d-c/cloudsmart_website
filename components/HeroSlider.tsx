@@ -12,7 +12,7 @@ const slides = [
     text4: "Expected",
     button: "BOOK A CALL",
     buttonLink: "/contact-us",
-    backgroundImage: "//dev.cloudsmart.co.uk/wp-content/uploads/revslider/consultancy/sli2-1.png"
+    backgroundImage: "/images/slider/hero-bg-1.png"
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const slides = [
     text4: "SUCCESS",
     button: "LEARN MORE",
     buttonLink: "/about",
-    backgroundImage: "//dev.cloudsmart.co.uk/wp-content/uploads/2022/03/slider-2.png"
+    backgroundImage: "/images/slider/hero-bg-2.png"
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const slides = [
     tagline: "Your business, your success!",
     button: "SERVICES",
     buttonLink: "/what-we-do",
-    backgroundImage: "//dev.cloudsmart.co.uk/wp-content/uploads/2022/03/slider-3.png"
+    backgroundImage: "/images/slider/hero-bg-3.png"
   }
 ]
 
