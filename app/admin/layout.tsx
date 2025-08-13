@@ -93,8 +93,8 @@ export default function AdminLayout({
                   cursor: 'pointer',
                   transition: 'background 0.3s'
                 }}
-                onMouseOver={(e) => e.target.style.background = 'var(--primary-color)'}
-                onMouseOut={(e) => e.target.style.background = 'none'}
+                onMouseOver={(e) => (e.target as HTMLElement).style.background = 'var(--primary-color)'}
+                onMouseOut={(e) => (e.target as HTMLElement).style.background = 'none'}
               >
                 Logout
               </button>
