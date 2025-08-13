@@ -89,7 +89,7 @@ export async function PUT(
     const result = await pool.query(query, queryParams)
 
     return NextResponse.json({ blogPost: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating blog post:', error)
     
     if (error.code === '23505') { // Unique constraint violation
