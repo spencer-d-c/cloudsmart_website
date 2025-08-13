@@ -12,7 +12,7 @@ const slides = [
     text4: "Expected",
     button: "BOOK A CALL",
     buttonLink: "/contact-us",
-    backgroundImage: "/images/slider/hero-bg-1.png"
+    backgroundImage: "/uploads/hero-bg-1.jpg"
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const slides = [
     text4: "SUCCESS",
     button: "LEARN MORE",
     buttonLink: "/about",
-    backgroundImage: "/images/slider/hero-bg-2.png"
+    backgroundImage: "/uploads/hero-bg-2.jpg"
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const slides = [
     tagline: "Your business, your success!",
     button: "SERVICES",
     buttonLink: "/what-we-do",
-    backgroundImage: "/images/slider/hero-bg-3.png"
+    backgroundImage: "/uploads/hero-bg-3.jpg"
   }
 ]
 
