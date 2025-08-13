@@ -8,9 +8,10 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
     const result = await pool.query(
       'SELECT * FROM blog_posts WHERE id = $1',
-      [params.id]
+      [resolvedParams.id]
     )
 
     if (result.rows.length === 0) {
@@ -36,6 +37,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
+    
     // Check authentication
     const token = request.cookies.get('auth-token')?.value
     if (!token || !verifyToken(token)) {
@@ -57,7 +60,7 @@ export async function PUT(
     // Get current post to check if published status changed
     const currentResult = await pool.query(
       'SELECT published FROM blog_posts WHERE id = $1',
-      [params.id]
+      [resolvedParams.id]
     )
 
     if (currentResult.rows.length === 0) {
@@ -73,17 +76,17 @@ export async function PUT(
     let query = `UPDATE blog_posts 
                  SET title = $1, slug = $2, excerpt = $3, content = $4, 
                      featured_image = $5, published = $6, updated_at = CURRENT_TIMESTAMP`
-    let params = [title, slug, excerpt || '', content || '', featured_image || '', published || false]
+    let queryParams = [title, slug, excerpt || '', content || '', featured_image || '', published || false]
 
     if (published_at !== undefined) {
       query += `, published_at = $7 WHERE id = $8 RETURNING *`
-      params.push(published_at, params.id)
+      queryParams.push(published_at, resolvedParams.id)
     } else {
       query += ` WHERE id = $7 RETURNING *`
-      params.push(params.id)
+      queryParams.push(resolvedParams.id)
     }
 
-    const result = await pool.query(query, params)
+    const result = await pool.query(query, queryParams)
 
     return NextResponse.json({ blogPost: result.rows[0] })
   } catch (error) {
@@ -109,6 +112,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
+    
     // Check authentication
     const token = request.cookies.get('auth-token')?.value
     if (!token || !verifyToken(token)) {
@@ -120,7 +125,7 @@ export async function DELETE(
 
     const result = await pool.query(
       'DELETE FROM blog_posts WHERE id = $1 RETURNING *',
-      [params.id]
+      [resolvedParams.id]
     )
 
     if (result.rows.length === 0) {
