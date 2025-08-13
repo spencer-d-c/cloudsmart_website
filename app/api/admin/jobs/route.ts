@@ -10,7 +10,7 @@ export async function GET() {
     )
 
     return NextResponse.json({ jobs: result.rows })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching job listings:', error)
     return NextResponse.json(
       { error: 'Failed to fetch job listings' },
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     )
 
     return NextResponse.json({ job: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating job listing:', error)
     
     if (error.code === '23505') { // Unique constraint violation

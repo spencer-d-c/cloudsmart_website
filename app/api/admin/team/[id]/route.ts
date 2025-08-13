@@ -8,9 +8,10 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
     const result = await pool.query(
       'SELECT * FROM team_members WHERE id = $1',
-      [params.id]
+      [resolvedParams.id]
     )
 
     if (result.rows.length === 0) {
@@ -21,7 +22,7 @@ export async function GET(
     }
 
     return NextResponse.json({ teamMember: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching team member:', error)
     return NextResponse.json(
       { error: 'Failed to fetch team member' },
@@ -36,6 +37,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
+    
     // Check authentication
     const token = request.cookies.get('auth-token')?.value
     if (!token || !verifyToken(token)) {
@@ -60,7 +63,7 @@ export async function PUT(
            order_index = $6, active = $7, updated_at = CURRENT_TIMESTAMP
        WHERE id = $8
        RETURNING *`,
-      [name, slug, title, bio || '', image_url || '', order_index || 0, active !== false, params.id]
+      [name, slug, title, bio || '', image_url || '', order_index || 0, active !== false, resolvedParams.id]
     )
 
     if (result.rows.length === 0) {
@@ -71,7 +74,7 @@ export async function PUT(
     }
 
     return NextResponse.json({ teamMember: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating team member:', error)
     
     if (error.code === '23505') { // Unique constraint violation
@@ -94,6 +97,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const resolvedParams = await params
+    
     // Check authentication
     const token = request.cookies.get('auth-token')?.value
     if (!token || !verifyToken(token)) {
@@ -105,7 +110,7 @@ export async function DELETE(
 
     const result = await pool.query(
       'DELETE FROM team_members WHERE id = $1 RETURNING *',
-      [params.id]
+      [resolvedParams.id]
     )
 
     if (result.rows.length === 0) {
@@ -116,7 +121,7 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error deleting team member:', error)
     return NextResponse.json(
       { error: 'Failed to delete team member' },

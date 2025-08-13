@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       authenticated: true,
       user: { id: user.id, email: user.email },
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Auth check error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },

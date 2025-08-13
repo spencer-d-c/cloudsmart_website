@@ -10,7 +10,7 @@ export async function GET() {
     )
 
     return NextResponse.json({ teamMembers: result.rows })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching team members:', error)
     return NextResponse.json(
       { error: 'Failed to fetch team members' },
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     )
 
     return NextResponse.json({ teamMember: result.rows[0] })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating team member:', error)
     
     if (error.code === '23505') { // Unique constraint violation

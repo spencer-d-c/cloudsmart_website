@@ -31,7 +31,7 @@ export async function authenticateUser(email: string, password: string): Promise
       id: user.id,
       email: user.email,
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Authentication error:', error)
     return null
   }
@@ -50,7 +50,7 @@ export function verifyToken(token: string): User | null {
       id: decoded.userId,
       email: decoded.email,
     }
-  } catch (error) {
+  } catch (error: any) {
     return null
   }
 }
@@ -64,7 +64,7 @@ export async function createAdminUser(email: string, password: string): Promise<
     )
 
     return result.rows[0]
-  } catch (error) {
+  } catch (error: any) {
     console.error('Create user error:', error)
     return null
   }
